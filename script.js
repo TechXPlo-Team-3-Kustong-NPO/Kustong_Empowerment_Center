@@ -8,11 +8,18 @@ const menu = document.getElementById('nav-menu');
 
 // Listen for clicks on the hamburger button
 if (toggle && menu) {
+  toggle.setAttribute('aria-controls', 'nav-menu');
+  toggle.setAttribute('aria-expanded', 'false');
+
   toggle.addEventListener('click', () => {
     // Add/remove the "open" class on the menu each time it's clicked.
     // When "open" is present, CSS shows the menu as a dropdown list (see styles.css).
     // When "open" is absent, the menu stays hidden (mobile default).
-    menu.classList.toggle('open');
+    const isOpen = menu.classList.toggle('open');
+
+    // Swap the icon between ☰ (closed) and ✕ (open) and tell screen readers the state
+    toggle.textContent = isOpen ? '\u2715' : '\u2630';
+    toggle.setAttribute('aria-expanded', String(isOpen));
   });
 }
 
